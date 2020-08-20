@@ -1,0 +1,15 @@
+node_modules/**/*
+.expo/*
+npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+*.png
+*.jpg
+web-build/
+web-report/
+settings.json
+
+assets/fonts/store/
