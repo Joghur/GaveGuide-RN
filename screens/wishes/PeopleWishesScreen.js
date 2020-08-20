@@ -9,43 +9,54 @@ import WishList from '../../components/UI/WishList'
 import Colors from '../../constants/Colors';
 
 const PeopleWishesScreen = props => {
-    console.log("PeopleWishesScreen")
-    const userId = props.navigation.getParam('userId')
-    // console.log("userId", userId)
-    const wishes = useSelector(state => state.wishes.availableWishes);
-    // console.log("wishes", wishes)
-    const selectedWishes = wishes.filter(wish => wish.ownerId === userId);
-    // console.log("selectedWishes", selectedWishes)
+  console.log("PeopleWishesScreen")
+  const userId = props.navigation.getParam('userId')
+  // console.log("userId", userId)
+  const wishes = useSelector(state => state.wishes.availableWishes);
+  // console.log("wishes", wishes)
+  const selectedWishes = wishes.filter(wish => wish.ownerId === userId);
+  // console.log("selectedWishes", selectedWishes)
 
-    if (selectedWishes.length === 0) {
-        return <View style={styles.centered} >
-            <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
-        </View>
-    }
+  if (selectedWishes.length === 0) {
+    return <View style={styles.centered} >
+      <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
+    </View>
+  }
 
-    return (
-        <View>
-            <WishList
-                listData={selectedWishes}
-                navigation={props.navigation}
-            />
-        </View>
-    );
+  return (
+    <View>
+      <WishList
+        listData={selectedWishes}
+        navigation={props.navigation}
+      />
+    </View>
+  );
 };
 
 PeopleWishesScreen.navigationOptions = (navigationData) => {
-    const name = navigationData.navigation.getParam('name')
-    return {
-        headerTitle: name
-    };
+  const name = navigationData.navigation.getParam('name')
+  return {
+    headerTitle: name,
+    headerRight: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="EditWish"
+          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+          onPress={() => {
+            navigationData.navigation.navigate('EditWish');
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 export default PeopleWishesScreen;
 
 const styles = StyleSheet.create({
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })

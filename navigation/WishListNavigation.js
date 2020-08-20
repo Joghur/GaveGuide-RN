@@ -18,6 +18,7 @@ import PeopleWishesScreen from '../screens/wishes/PeopleWishesScreen';
 import StartupScreen from '../screens/StartupScreen';
 import WishDetailScreen from '../screens/wishes/WishDetailScreen';
 import AllWishesScreen from '../screens/wishes/AllWishesScreen';
+import EditWishScreen from '../screens/wishes/EditWishScreen';
 import AuthScreen from '../screens/user/AuthScreen';
 import UserScreen from '../screens/user/UserScreen';
 import Colors from '../constants/Colors';
@@ -42,6 +43,7 @@ const WishListNavigator = createStackNavigator(
     MainScreen,
     PeopleWishes: PeopleWishesScreen,
     WishDetail: WishDetailScreen,
+    EditWish: EditWishScreen,
     AllWishes: AllWishesScreen,
   },
   {

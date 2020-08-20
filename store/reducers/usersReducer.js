@@ -1,18 +1,18 @@
 import { USERS } from '../../data/dummy-data';
 import {
-    SET_USER
-} from '../actions/usersReducer';
+  SET_USER
+} from '../actions/usersActions';
 
 const initialState = {
-    availableUsers: USERS
+  availableUsers: USERS
 };
 
 export default (state = initialState, action) => {
-    switch (action.type) {
-        case SET_USER:
-            return {
-                availableUsers: action.users,
-            }
-    }
-    return state;
+  switch (action.type) {
+    case SET_USER:
+      return {
+        availableUsers: action.users,
+      }
+  }
+  return state;
 };
