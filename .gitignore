@@ -10,7 +10,6 @@ npm-debug.*
 *.jpg
 web-build/
 web-report/
-settings.json
 
 assets/fonts/store/
 

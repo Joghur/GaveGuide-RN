@@ -3,11 +3,8 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
     "test": "jest",
-    "lint": "eslint ./**/*.js ./App.js"
+    "lint": "eslint *.js **/*.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.2.0",
