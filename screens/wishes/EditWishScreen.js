@@ -110,7 +110,7 @@ const EditWishScreen = props => {
       // }
       props.navigation.goBack();
     } catch (error) {
-      setError(err.message);
+      setError(error.message);
     }
 
     setIsLoading(false);

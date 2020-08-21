@@ -30,10 +30,41 @@ export default (state = initialState, action) => {
         action.wishData.imageUri,
       );
       return {
-        ...state,
         availableWishes: state.availableWishes.concat(newWish)
       };
 
+    case UPDATE_WISH:
+      const wishIndex = state.availableWishes.findIndex(
+        wish => wish.id === action.wishId
+      );
+      const updatedWish = new Wish(
+        action.wishId,
+        "1",
+        state.availableWishes[wishIndex].ownerId,
+        action.wishData.title,
+        action.wishData.text,
+        action.wishData.price,
+        action.wishData.url,
+        action.wishData.imageUri,
+      );
+
+      const availableWishIndex = state.availableWishes.findIndex(
+        wish => wish.id === action.wishId
+      );
+
+      const updatedAvailableWishes = [...state.availableWishes];
+      updatedAvailableWishes[availableWishIndex] = updatedWish;
+
+      return {
+        availableWishes: updatedAvailableProducts,
+      };
+
+    case DELETE_WISH:
+      return {
+        availableWishes: state.availableWishes.filter(
+          wish => wish.id !== action.wishId
+        )
+      };
 
   }
 

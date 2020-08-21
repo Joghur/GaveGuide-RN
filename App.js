@@ -12,6 +12,7 @@ import authReducer from './store/reducers/authReducer';
 import usersReducer from './store/reducers/usersReducer';
 import NavigationContainer from './navigation/NavigationContainer';
 
+
 const rootReducer = combineReducers({
   wishes: wishesReducer,
   users: usersReducer,

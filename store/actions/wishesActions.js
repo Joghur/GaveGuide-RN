@@ -1,44 +1,65 @@
 import Wish from '../../models/wish';
 import { DB } from '../../wishConfig.json';
 
+import firestore from "../../firebaseConfig";
+
 export const DELETE_WISH = 'DELETE_WISH';
 export const CREATE_WISH = 'CREATE_WISH';
 export const UPDATE_WISH = 'UPDATE_WISH';
 export const SET_WISH = 'SET_WISH';
+
+const wishesDB = firestore.collection('wishes');
 
 export const fetchWishes = () => {
   return async (dispatch, getState) => {
     const { token } = getState().auth.token;
 
     try {
-      const response = await fetch(
-        `${DB}/wishes.json?auth=${token}`,
-      );
 
-      if (!response.ok) {
-        throw new Error('Something went wrong, WishesActions');
-      }
+      const loadedWishes = [];
 
-      const resData = await response.json();
+      const snapshot = await wishesDB.get();
+      snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+        loadedWishes.push(new Wish(
+          doc.id,
+          doc.data().groupId,
+          doc.data().ownerId,
+          doc.data().title,
+          doc.data().text,
+          doc.data().price,
+          doc.data().url,
+          doc.data().imageUri,
+        ));
+      });
 
-      console.log("resData", resData)
+
+      // const response = await fetch(
+      //   `${DB}/wishes.json?auth=${token}`,
+      // );
+
+      // if (!response.ok) {
+      //   throw new Error('Something went wrong, WishesActions');
+      // }
+
+      // const resData = await response.json();
+
+      // console.log("resData", resData)
 
       // konverterer object (der er fyldt med data om hvert ønske)
       // om til array
-      const loadedWishes = [];
-      for (const key in resData) {
-        loadedWishes.push(new Wish(
-          key,
-          resData[key].groupId,
-          resData[key].ownerId,
-          resData[key].title,
-          resData[key].description,
-          resData[key].text,
-          resData[key].price,
-          resData[key].url,
-          resData[key].imageUri,
-        ));
-      }
+      // for (const key in snapshot) {
+      //   loadedWishes.push(new Wish(
+      //     key,
+      //     snapshot[key].groupId,
+      //     snapshot[key].ownerId,
+      //     snapshot[key].title,
+      //     snapshot[key].text,
+      //     snapshot[key].price,
+      //     snapshot[key].url,
+      //     snapshot[key].imageUri,
+      //   ));
+      // }
 
       dispatch({
         type: SET_WISH,
@@ -56,31 +77,20 @@ export const createWish = (title, text, price, url, imageUri) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
 
-    // any async code (because of redux-thunk)
-    // .json firebase specific thing
-    const response = await fetch(
-      `${DB}/wishes.json?auth=${token}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        groupId: "1",
-        ownerId: userId,
-        title,
-        text,
-        price,
-        url,
-        imageUri,
-      })
+    const wish_ref = await wishesDB.add({
+      groupId: "1",
+      ownerId: userId,
+      title,
+      text,
+      price,
+      url,
+      imageUri,
     });
-
-    const resData = await response.json();
 
     dispatch({
       type: CREATE_WISH,
       wishData: {
-        id: resData.name,
+        id: wish_ref.id,
         groupId: "1",
         ownerId: userId,
         title,
@@ -126,11 +136,13 @@ export const updateWish = (id, title, text, price, url, imageUri) => {
 
     dispatch({
       type: UPDATE_WISH,
-      pid: id,
-      productData: {
+      wishId: id,
+      wishData: {
         title,
-        description,
-        imageUrl
+        text,
+        price,
+        url,
+        imageUri
       }
     });
   };
@@ -153,7 +165,7 @@ export const deleteWish = (wishId) => {
 
     dispatch({
       type: DELETE_WISH,
-      pid: wishId
+      wishId
     });
   };
 };

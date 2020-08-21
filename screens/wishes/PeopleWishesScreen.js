@@ -17,14 +17,19 @@ const PeopleWishesScreen = props => {
   const userId = props.navigation.getParam('userId')
   const wishes = useSelector(state => state.wishes.availableWishes);
   const selectedWishes = wishes.filter(wish => wish.ownerId === userId);
+  console.log("PeopleWishesScreen, useEffect, userId", userId)
+  console.log("PeopleWishesScreen, useEffect, wishes", wishes)
+  console.log("PeopleWishesScreen, useEffect, selectedWishes", selectedWishes)
   const dispatch = useDispatch();
 
   const loadWishes = useCallback(async () => {
+    console.log("PeopleWishesScreen, useEffect")
     setError(null);
     setIsRefreshing(true)
     try {
       await dispatch(wishesActions.fetchWishes());
     } catch (err) {
+      console.log("error, err -------", err)
       setError(err.message);
     }
     setIsRefreshing(false)
@@ -44,10 +49,10 @@ const PeopleWishesScreen = props => {
   if (error) {
     return (
       <View style={styles.centered} >
-        <Text>An error occurred.</Text>
+        <Text>Der opstod en fejl!</Text>
         <Button
-          title="Try again"
-          onPress={loadProducts}
+          title="Prøv igen"
+          onPress={loadWishes}
           color={Colors.primary}
         />
       </View>
@@ -63,6 +68,11 @@ const PeopleWishesScreen = props => {
   if (!isLoading && selectedWishes.length === 0) {
     return <View style={styles.centered} >
       <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
+      <Button
+        title="Prøv igen"
+        onPress={loadWishes}
+        color={Colors.primary}
+      />
     </View>
   }
 

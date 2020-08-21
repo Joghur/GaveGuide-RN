@@ -16,3 +16,5 @@ assets/fonts/store/
 wishConfig.json
 
 firebaseConfig.js
+
+yarn.lock
