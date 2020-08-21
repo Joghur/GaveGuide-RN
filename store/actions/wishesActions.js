@@ -8,11 +8,11 @@ export const SET_WISH = 'SET_WISH';
 
 export const fetchWishes = () => {
   return async (dispatch, getState) => {
-    const { userId } = getState().auth;
+    const { token } = getState().auth.token;
 
     try {
       const response = await fetch(
-        `${DB}/wishes.json`,
+        `${DB}/wishes.json?auth=${token}`,
       );
 
       if (!response.ok) {
@@ -20,6 +20,8 @@ export const fetchWishes = () => {
       }
 
       const resData = await response.json();
+
+      console.log("resData", resData)
 
       // konverterer object (der er fyldt med data om hvert ønske)
       // om til array

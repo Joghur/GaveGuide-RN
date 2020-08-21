@@ -19,6 +19,8 @@ export const fetchUsers = () => {
 
     const resData = await response.json();
 
+    console.log("resData", resData)
+
     // konverterer object (der er fyldt med data om hvert ønske)
     // om til array
     const loadedUsers = [];

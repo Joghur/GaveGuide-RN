@@ -6,18 +6,61 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import DefaultText from '../../components/UI/DefaultText';
 import HeaderButton from '../../components/UI/HeaderButton';
 import WishList from '../../components/UI/WishList'
+import * as wishesActions from '../../store/actions/wishesActions';
 import Colors from '../../constants/Colors';
 
 const PeopleWishesScreen = props => {
   console.log("PeopleWishesScreen")
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [error, setError] = useState()
   const userId = props.navigation.getParam('userId')
-  // console.log("userId", userId)
   const wishes = useSelector(state => state.wishes.availableWishes);
-  // console.log("wishes", wishes)
   const selectedWishes = wishes.filter(wish => wish.ownerId === userId);
-  // console.log("selectedWishes", selectedWishes)
+  const dispatch = useDispatch();
 
-  if (selectedWishes.length === 0) {
+  const loadWishes = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true)
+    try {
+      await dispatch(wishesActions.fetchWishes());
+    } catch (err) {
+      setError(err.message);
+    }
+    setIsRefreshing(false)
+  }, [dispatch, setIsLoading, setError])
+
+  // sidedrawer ligger i hukommelsen og bliver ikke gendannet når man
+  // skifter mellem siden (modsat en stackNavigator)
+  // Så der skal laves en listener
+  useEffect(() => {
+    const willFocus = props.navigation.addListener('willFocus', loadWishes);
+    return () => {
+      willFocus.remove();
+    }
+  }, [loadWishes])
+
+
+  if (error) {
+    return (
+      <View style={styles.centered} >
+        <Text>An error occurred.</Text>
+        <Button
+          title="Try again"
+          onPress={loadProducts}
+          color={Colors.primary}
+        />
+      </View>
+    )
+  }
+
+  if (isLoading) {
+    return <View style={styles.centered} >
+      <ActivityIndicator size='large' color={Colors.primary} />
+    </View>
+  }
+
+  if (!isLoading && selectedWishes.length === 0) {
     return <View style={styles.centered} >
       <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
     </View>

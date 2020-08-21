@@ -8,7 +8,7 @@ import {
 import Wish from '../../models/wish'
 
 const initialState = {
-  availableWishes: WISHES
+  availableWishes: []
 };
 
 export default (state = initialState, action) => {
