@@ -14,3 +14,5 @@ web-report/
 assets/fonts/store/
 
 wishConfig.json
+
+firebaseConfig.js
