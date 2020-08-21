@@ -33,34 +33,6 @@ export const fetchWishes = () => {
         ));
       });
 
-
-      // const response = await fetch(
-      //   `${DB}/wishes.json?auth=${token}`,
-      // );
-
-      // if (!response.ok) {
-      //   throw new Error('Something went wrong, WishesActions');
-      // }
-
-      // const resData = await response.json();
-
-      // console.log("resData", resData)
-
-      // konverterer object (der er fyldt med data om hvert ønske)
-      // om til array
-      // for (const key in snapshot) {
-      //   loadedWishes.push(new Wish(
-      //     key,
-      //     snapshot[key].groupId,
-      //     snapshot[key].ownerId,
-      //     snapshot[key].title,
-      //     snapshot[key].text,
-      //     snapshot[key].price,
-      //     snapshot[key].url,
-      //     snapshot[key].imageUri,
-      //   ));
-      // }
-
       dispatch({
         type: SET_WISH,
         wishes: loadedWishes,
@@ -131,7 +103,7 @@ export const updateWish = (id, title, text, price, url, imageUri) => {
       });
 
     if (!response.ok) {
-      throw new Error("Something went wrong")
+      throw new Error("Something went wrong. wishActions updateWish")
     }
 
     dispatch({
@@ -160,7 +132,7 @@ export const deleteWish = (wishId) => {
 
 
     if (!response.ok) {
-      throw new Error("Something went wrong")
+      throw new Error("Something went wrong. wishActions deleteWish")
     }
 
     dispatch({
