@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { API_Key } from '../../wishConfig.json';
+import firebase from 'firebase';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const REFRESH = 'REFRESH';
@@ -7,9 +8,9 @@ export const LOGOUT = 'LOGOUT';
 
 let timer;
 
-export const authenticate = (userId, token) => {
+export const authenticate = (userId) => {
 	return (dispatch) => {
-		dispatch({ type: AUTHENTICATE, userId, token });
+		dispatch({ type: AUTHENTICATE, userId });
 	};
 };
 
@@ -32,11 +33,11 @@ export const login = (email, password) => {
 
     // const token = getState().auth.token;
     const user_obj = await user();
-		console.log('user_obj', user_obj );
+		console.log('user_obj.user.uid', user_obj.user.uid );
 
-		dispatch(authenticate(resData.localId, resData.idToken));
-		saveDataToStorage(resData.idToken, resData.localId);
-		saveRefreshToStorage(resData.refreshToken);
+		dispatch(authenticate(user_obj.user.uid));
+		// saveDataToStorage(resData.idToken, resData.localId);
+		// saveRefreshToStorage(resData.refreshToken);
 	};
 };
 
