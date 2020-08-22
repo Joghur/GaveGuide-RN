@@ -34,21 +34,21 @@ const StartupScreen = (props) => {
         dispatch(authActions.refresh(refreshToken));
       }
       const transformedData = await JSON.parse(userData);
-      const { token, userId, expiryDate } = transformedData;
+      const { token, userId } = transformedData;
       // console.log("StartUpScreen, transformedData", transformedData)
-      const expirationDate = new Date(expiryDate);
+      // const expirationDate = new Date(expiryDate);
       // console.log("StartUpScreen, expirationDate", expirationDate)
 
-      if (expirationDate <= new Date() || !token || !userId) {
-        // console.log("StartUpScreen, expirationDate <= new Date()", expirationDate)
-        props.navigation.navigate('Auth');
-        return;
-      }
+      // if (expirationDate <= new Date() || !token || !userId) {
+      //   // console.log("StartUpScreen, expirationDate <= new Date()", expirationDate)
+      //   props.navigation.navigate('Auth');
+      //   return;
+      // }
 
-      const expirationTime = expirationDate.getTime() - new Date().getTime();
+      // const expirationTime = expirationDate.getTime() - new Date().getTime();
 
       props.navigation.navigate('Wishes');
-      dispatch(authActions.authenticate(userId, token, expirationTime));
+      dispatch(authActions.authenticate(userId, token));
     };
 
     tryLogin();
