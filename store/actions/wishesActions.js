@@ -9,10 +9,11 @@ export const CREATE_WISH = 'CREATE_WISH';
 export const UPDATE_WISH = 'UPDATE_WISH';
 export const SET_WISH = 'SET_WISH';
 
+
 export const fetchWishes = () => {
 	console.log('fetchWishes');
 	return async (dispatch, getState) => {
-
+		
 		const wishesDB = firebase.firestore().collection('wishes');
 		console.log('wishesDB', wishesDB);
 		try {
@@ -48,8 +49,9 @@ export const fetchWishes = () => {
 
 export const createWish = (title, text, price, url, imageUri) => {
 	return async (dispatch, getState) => {
-		const token = getState().auth.token;
 		const userId = getState().auth.userId;
+
+		const wishesDB = firebase.firestore().collection('wishes');
 
 		const wish_ref = await wishesDB.add({
 			groupId: '1',
@@ -82,7 +84,7 @@ export const updateWish = (id, title, text, price, url, imageUri) => {
 		// redux-thunk giver muilighed for at at aflæse state inde i
 		// dispatch function
 
-		const token = getState().auth.token;
+		const wishesDB = firebase.firestore().collection('wishes');
 
 		// PATCH opdaterer kun de punkter vi leverer
 		// PUT opdaterer hele molevitten
@@ -120,7 +122,7 @@ export const updateWish = (id, title, text, price, url, imageUri) => {
 
 export const deleteWish = (wishId) => {
 	return async (dispatch, getState) => {
-		const token = getState().auth.token;
+		const wishesDB = firebase.firestore().collection('wishes');
 
 		const response = await fetch(`${DB}/wishes/${wishId}.json?auth=${token}`, {
 			method: 'DELETE'
