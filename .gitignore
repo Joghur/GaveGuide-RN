@@ -11,7 +11,7 @@ npm-debug.*
 web-build/
 web-report/
 
-assets/fonts/store/
+assets/fonts/
 
 wishConfig.json
 
