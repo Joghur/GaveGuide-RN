@@ -13,7 +13,7 @@ import usersReducer from './store/reducers/usersReducer';
 import NavigationContainer from './navigation/NavigationContainer';
 
 import * as firebase from 'firebase';
-import firebaseConfig from './firebaseConfig';
+import firebaseConfig from './config/Firebase';
 
 const rootReducer = combineReducers({
 	wishes: wishesReducer,

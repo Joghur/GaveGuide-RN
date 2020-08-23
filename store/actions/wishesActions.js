@@ -1,5 +1,4 @@
 import Wish from '../../models/wish';
-import { DB } from '../../wishConfig.json';
 
 import 'firebase/firestore';
 import firebase from 'firebase';
@@ -120,21 +119,21 @@ export const updateWish = (id, title, text, price, url, imageUri) => {
 	};
 };
 
-export const deleteWish = (wishId) => {
-	return async (dispatch, getState) => {
-		const wishesDB = firebase.firestore().collection('wishes');
+// export const deleteWish = (wishId) => {
+// 	return async (dispatch, getState) => {
+// 		const wishesDB = firebase.firestore().collection('wishes');
 
-		const response = await fetch(`${DB}/wishes/${wishId}.json?auth=${token}`, {
-			method: 'DELETE'
-		});
+// 		const response = await fetch(`${DB}/wishes/${wishId}.json?auth=${token}`, {
+// 			method: 'DELETE'
+// 		});
 
-		if (!response.ok) {
-			throw new Error('Something went wrong. wishActions deleteWish');
-		}
+// 		if (!response.ok) {
+// 			throw new Error('Something went wrong. wishActions deleteWish');
+// 		}
 
-		dispatch({
-			type: DELETE_WISH,
-			wishId
-		});
-	};
-};
+// 		dispatch({
+// 			type: DELETE_WISH,
+// 			wishId
+// 		});
+// 	};
+// };
