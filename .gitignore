@@ -18,3 +18,5 @@ wishConfig.json
 firebaseConfig.js
 
 yarn.lock
+
+config/Firebase.js
