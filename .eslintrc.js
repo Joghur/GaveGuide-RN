@@ -16,6 +16,7 @@ module.exports = {
     'react/no-unescaped-entities': ['error', { forbid: ['>', '}'] }],
     'arrow-body-style': ['error', 'always'],
     'react/jsx-props-no-spreading': 'off',
+    'react/prop-types': 'off',
     quotes: [
       'error',
       'single',
