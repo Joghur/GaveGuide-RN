@@ -24,11 +24,17 @@ const WishDetailScreen = (props) => {
     return wish.id === wishId;
   });
 
+  console.log("selectedWish ---------", selectedWish)
+  if (!selectedWish) {
+    props.navigation.goBack();
+  }
+
   const onPressHandler = async () => {
-    console.log("onPressHandler, wishId", wishId);
+    console.log("props.navigation", props.navigation)
     setError(null);
     try {
       await dispatch(wishesActions.deleteWish(wishId));
+      props.navigation.navigate('PeopleWishes');
     } catch (err) {
       console.log('error, err -------', err);
       setError(err.message);
@@ -62,10 +68,10 @@ const WishDetailScreen = (props) => {
         </Text>
         <View style={styles.buttonContainer}>
           <View style={styles.buttonShadow}>
-            <Text style={styles.button}>Opdater Ønske</Text>
+            <Text onPress={onPressHandler} style={styles.button}>Opdater Ønske</Text>
           </View>
-          <View onPress={onPressHandler} style={styles.buttonShadow}>
-            <Text style={styles.button}>Slet Ønske</Text>
+          <View style={styles.buttonShadow}>
+            <Text onPress={onPressHandler} style={styles.button}>Slet Ønske</Text>
           </View>
         </View>
       </View>

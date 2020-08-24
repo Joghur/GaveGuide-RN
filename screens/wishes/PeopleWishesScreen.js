@@ -40,7 +40,7 @@ const PeopleWishesScreen = (props) => {
 
   useEffect(() => {
     loadWishes();
-  }, []);
+  }, [loadWishes]);
 
   // sidedrawer ligger i hukommelsen og bliver ikke gendannet når man
   // skifter mellem siden (modsat en stackNavigator)

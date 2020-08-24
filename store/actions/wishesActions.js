@@ -15,7 +15,6 @@ export const fetchWishes = () => {
   console.log('fetchWishes');
   return async (dispatch, getState) => {
     const wishesDB = firebase.firestore().collection('wishes');
-    console.log('wishesDB', wishesDB);
     try {
       const loadedWishes = [];
 
@@ -124,7 +123,7 @@ export const deleteWish = (wishId) => {
   return async (dispatch, getState) => {
     const wishesDB = firebase.firestore().collection('wishes');
 
-    const res = await wishesDB.collection('wishes').doc(wishId).delete();
+    const res = await wishesDB.doc(wishId).delete();
     console.log('res -----------------', res);
     // if (!response.ok) {
     //   throw new Error('Something went wrong. wishActions deleteWish');
