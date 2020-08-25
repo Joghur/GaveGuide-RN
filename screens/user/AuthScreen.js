@@ -1,4 +1,8 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react';
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
+import React, {
+  useState, useEffect, useReducer, useCallback,
+} from 'react';
 import {
   ScrollView,
   View,
@@ -6,7 +10,7 @@ import {
   StyleSheet,
   Button,
   ActivityIndicator,
-  Alert
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useDispatch } from 'react-redux';
@@ -22,11 +26,11 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.input]: action.value
+      [action.input]: action.value,
     };
     const updatedValidities = {
       ...state.inputValidities,
-      [action.input]: action.isValid
+      [action.input]: action.isValid,
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
@@ -35,13 +39,13 @@ const formReducer = (state, action) => {
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
-      inputValues: updatedValues
+      inputValues: updatedValues,
     };
   }
   return state;
 };
 
-const AuthScreen = props => {
+const AuthScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
@@ -49,13 +53,13 @@ const AuthScreen = props => {
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       email: '',
-      password: ''
+      password: '',
     },
     inputValidities: {
       email: false,
-      password: false
+      password: false,
     },
-    formIsValid: false
+    formIsValid: false,
   });
 
   useEffect(() => {
@@ -65,11 +69,11 @@ const AuthScreen = props => {
   }, [error]);
 
   const authHandler = async () => {
-    console.log("authHandler")
+    console.log('authHandler');
     let action;
     action = authActions.login(
       formState.inputValues.email,
-      formState.inputValues.password
+      formState.inputValues.password,
     );
     // console.log("authHandler, action", action)
     setError(null);
@@ -89,16 +93,16 @@ const AuthScreen = props => {
         type: FORM_INPUT_UPDATE,
         value: inputValue,
         isValid: inputValidity,
-        input: inputIdentifier
+        input: inputIdentifier,
       });
     },
-    [dispatchFormState]
+    [dispatchFormState],
   );
 
   return (
     <KeyboardAvoidingView
-      // behavior="padding"
-      // keyboardVerticalOffset={20}
+      behavior="padding"
+      keyboardVerticalOffset={20}
       style={styles.screen}
     >
       <LinearGradient colors={['#aaa', '#fff']} style={styles.gradient}>
@@ -132,7 +136,7 @@ const AuthScreen = props => {
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
                   <Button
-                    title={'Login'}
+                    title="Login"
                     color={Colors.primary}
                     onPress={authHandler}
                   />
@@ -146,27 +150,27 @@ const AuthScreen = props => {
 };
 
 AuthScreen.navigationOptions = {
-  headerTitle: 'Authenticate'
+  headerTitle: 'Authenticate',
 };
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1
+    flex: 1,
   },
   gradient: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   authContainer: {
     width: '80%',
     maxWidth: 400,
     maxHeight: 400,
-    padding: 20
+    padding: 20,
   },
   buttonContainer: {
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
 
 export default AuthScreen;

@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity,
