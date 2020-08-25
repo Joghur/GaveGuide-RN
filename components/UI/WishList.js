@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import WishItem from './WishItem';
 import * as wishesActions from '../../store/actions/wishesActions';
-import Colors from '../../constants/Colors';
 
 const WishList = (props) => {
   console.log('WishList');
@@ -17,10 +16,10 @@ const WishList = (props) => {
 
   const deleteHandler = (id) => {
     console.log('WishDetailScreen - deleteHandler, id', id);
-    Alert.alert('Are you sure?', 'Do you really want to delete this item?', [
-      { text: 'No', style: 'default' },
+    Alert.alert('Er du sikker?', 'Vil du slette dette øsnke?', [
+      { text: 'Nej', style: 'default' },
       {
-        text: 'Yes',
+        text: 'Ja',
         style: 'destructive',
         onPress: () => {
           dispatch(wishesActions.deleteWish(id));

@@ -1,22 +1,17 @@
 /* eslint-disable react/jsx-no-bind */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image, View, Text, StyleSheet, Linking,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { ScrollView } from 'react-native-gesture-handler';
 import DefaultText from '../../components/UI/DefaultText';
 
-import * as wishesActions from '../../store/actions/wishesActions';
 import Colors from '../../constants/Colors';
 
 const WishDetailScreen = (props) => {
   console.log('WishDetailScreen');
-
-  const [error, setError] = useState();
-
-  const dispatch = useDispatch();
 
   const availableWishes = useSelector((state) => { return state.wishes.availableWishes; });
   const wishId = props.navigation.getParam('wishId');
@@ -25,27 +20,10 @@ const WishDetailScreen = (props) => {
     return wish.id === wishId;
   });
 
-  console.log('selectedWish ---------', selectedWish);
+  console.log('WishDetailScreen - selectedWish ---------', selectedWish);
 
   if (typeof selectedWish === 'undefined') {
     props.navigation.goBack();
-  }
-
-  // const onPressHandler = async () => {
-  //   console.log('WishDetailScreen - onPressHandler');
-  //   setError(null);
-  //   try {
-  //     console.log('WishDetailScreen - try/catch - wishId', wishId);
-  //     await dispatch(wishesActions.deleteWish(wishId));
-  //     props.navigation.navigate('PeopleWishes');
-  //   } catch (err) {
-  //     console.log('WishDetailScreen - onPressHandler - error, err -------', err);
-  //     setError(err.message);
-  //   }
-  // };
-
-  if (error) {
-    return <View>{error}</View>;
   }
 
   if (selectedWish.length === 0) {
@@ -91,30 +69,6 @@ WishDetailScreen.navigationOptions = (navigationData) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    fontFamily: 'chilanka-regular',
-    borderRadius: 20,
-    padding: 10,
-    fontSize: 18,
-    overflow: 'hidden',
-  },
-  buttonContainer: {
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
-    fontFamily: 'chilanka-regular',
-    fontSize: 45,
-  },
-  buttonShadow: {
-    borderRadius: 20,
-    shadowColor: 'black',
-    shadowOpacity: 1,
-    shadowOffset: { width: 6, height: 6 },
-    shadowRadius: 10,
-    elevation: 5,
-    padding: 8,
-    marginVertical: 5,
-    marginHorizontal: 10,
-  },
   image: {
     width: '100%',
     height: 200,

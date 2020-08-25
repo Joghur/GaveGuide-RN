@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
       );
       const updatedWish = new Wish(
         action.wishId,
-        '1',
+        action.wishData.groupId,
         state.availableWishes[wishIndex].ownerId,
         action.wishData.title,
         action.wishData.text,

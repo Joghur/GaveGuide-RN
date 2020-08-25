@@ -81,46 +81,41 @@ export const createWish = (title, text, price, url, imageUri) => {
   };
 };
 
-// export const updateWish = (id, title, text, price, url, imageUri) => {
-//   return async (dispatch, getState) => {
-//     // redux-thunk giver muilighed for at at aflæse state inde i
-//     // dispatch function
+export const updateWish = (id, groupId, title, text, price, url, imageUri) => {
+  return async (dispatch, getState) => {
+    // redux-thunk giver muilighed for at at aflæse state inde i
+    // dispatch function
 
-//     const wishesDB = firebase.firestore().collection('wishes');
+    console.log('updateWishAction');
 
-//     // PATCH opdaterer kun de punkter vi leverer
-//     // PUT opdaterer hele molevitten
-//     const response = await fetch(`${DB}/wishes/${id}.json?auth=${token}`, {
-//       method: 'PATCH',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         title,
-//         text,
-//         price,
-//         url,
-//         imageUri,
-//       }),
-//     });
+    const { userId } = getState().auth;
+    const wishesDB = firebase.firestore().collection('wishes');
 
-//     if (!response.ok) {
-//       throw new Error('Something went wrong. wishActions updateWish');
-//     }
+    wishesDB.doc(id).update({
+      groupId,
+      ownerId: userId,
+      title,
+      text,
+      price,
+      url,
+      imageUri,
+    });
 
-//     dispatch({
-//       type: UPDATE_WISH,
-//       wishId: id,
-//       wishData: {
-//         title,
-//         text,
-//         price,
-//         url,
-//         imageUri,
-//       },
-//     });
-//   };
-// };
+    dispatch({
+      type: UPDATE_WISH,
+      wishId: id,
+      wishData: {
+        groupId,
+        ownerId: userId,
+        title,
+        text,
+        price,
+        url,
+        imageUri,
+      },
+    });
+  };
+};
 
 export const deleteWish = (wishId) => {
   console.log('deleteWishAction');

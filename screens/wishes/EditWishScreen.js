@@ -56,11 +56,11 @@ const EditWishScreen = (props) => {
       title: editedWish ? editedWish.title : '',
       text: editedWish ? editedWish.text : '',
       price: editedWish ? editedWish.price : '',
+      url: editedWish ? editedWish.url : '',
+      imageUri: editedWish ? editedWish.imageUri : '',
     },
     inputValidities: {
       title: !!editedWish,
-      text: !!editedWish,
-      price: !!editedWish,
     },
     formIsValid: !!editedWish,
   });
@@ -85,26 +85,29 @@ const EditWishScreen = (props) => {
       setIsLoading(true);
 
       try {
-        // if (editedWish) {
-        //   await dispatch(
-        //     wishesActions.updateProduct(
-        //       prodId,
-        //       formState.inputValues.title,
-        //       formState.inputValues.description,
-        //       formState.inputValues.imageUrl
-        //     )
-        //   );
-        // } else {
-        await dispatch(
-          wishesActions.createWish(
-            formState.inputValues.title,
-            formState.inputValues.text,
-            +formState.inputValues.price,
-            formState.inputValues.url,
-            formState.inputValues.imageUri,
-          ),
-        );
-        // }
+        if (editedWish) {
+          await dispatch(
+            wishesActions.updateWish(
+              wishId,
+              '1',
+              formState.inputValues.title,
+              formState.inputValues.text,
+              formState.inputValues.price,
+              formState.inputValues.url,
+              formState.inputValues.imageUri,
+            ),
+          );
+        } else {
+          await dispatch(
+            wishesActions.createWish(
+              formState.inputValues.title,
+              formState.inputValues.text,
+              +formState.inputValues.price,
+              formState.inputValues.url,
+              formState.inputValues.imageUri,
+            ),
+          );
+        }
         props.navigation.goBack();
       } catch (err) {
         setError(err.message);
@@ -178,7 +181,7 @@ const EditWishScreen = (props) => {
             multiline
             numberOfLines={3}
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.description : ''}
+            initialValue={editedWish ? editedWish.text : ''}
             initiallyValid={!!editedWish}
           />
           <Input
@@ -198,7 +201,7 @@ const EditWishScreen = (props) => {
             keyboardType="default"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.imageUrl : ''}
+            initialValue={editedWish ? editedWish.imageUri : ''}
             initiallyValid={!!editedWish}
           />
         </View>
