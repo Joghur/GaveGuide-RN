@@ -57,7 +57,15 @@ const WishList = (props) => {
         />
         <View style={styles.buttonContainer}>
           <View style={styles.buttonShadow}>
-            <Text onPress={deleteHandler.bind(this, itemData.item.id)} style={styles.button}>Opdater Ønske</Text>
+            <Text
+              onPress={() => {
+                props.navigation.navigate('EditWish', { wishId: itemData.item.id });
+              }}
+              style={styles.button}
+            >
+              Opdater Ønske
+
+            </Text>
           </View>
           <View style={styles.buttonShadow}>
             <Text onPress={deleteHandler.bind(this, itemData.item.id)} style={styles.button}>Slet Ønske</Text>

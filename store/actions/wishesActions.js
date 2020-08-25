@@ -21,7 +21,7 @@ export const fetchWishes = () => {
 
       const snapshot = await wishesDB.get();
       snapshot.forEach((doc) => {
-        console.log('fetchWishes - ', doc.id, '=>', doc.data());
+        // console.log('fetchWishes - ', doc.id, '=>', doc.data());
         loadedWishes.push(
           new Wish(
             doc.id,
@@ -51,6 +51,7 @@ export const createWish = (title, text, price, url, imageUri) => {
   console.log('createWish');
 
   return async (dispatch, getState) => {
+    console.log('createWish, dispatch');
     const { userId } = getState().auth;
 
     const wishesDB = firebase.firestore().collection('wishes');
@@ -82,11 +83,13 @@ export const createWish = (title, text, price, url, imageUri) => {
 };
 
 export const updateWish = (id, groupId, title, text, price, url, imageUri) => {
+  console.log('updateWish');
+
   return async (dispatch, getState) => {
-    // redux-thunk giver muilighed for at at aflæse state inde i
+    // redux-thunk giver mulighed for at at aflæse state inde i
     // dispatch function
 
-    console.log('updateWishAction');
+    console.log('updateWishAction - dispatch');
 
     const { userId } = getState().auth;
     const wishesDB = firebase.firestore().collection('wishes');

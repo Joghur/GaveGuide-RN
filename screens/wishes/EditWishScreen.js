@@ -40,6 +40,8 @@ const formReducer = (state, action) => {
 };
 
 const EditWishScreen = (props) => {
+  console.log('EditWishesScreen');
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -49,6 +51,8 @@ const EditWishScreen = (props) => {
       return wish.id === wishId;
     });
   });
+  console.log('EditWishesScreen, wishId, editedWish', wishId, !!editedWish);
+
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -76,6 +80,7 @@ const EditWishScreen = (props) => {
 
   const submitHandler = useCallback(
     async () => {
+      console.log('EditWishesScreen - submitHandler - editedWish', !!editedWish);
       if (!formState.formIsValid) {
         Alert.alert('Wrong input!', 'Please check the errors in the form.', [{ text: 'Okay' }]);
         return;
@@ -85,6 +90,7 @@ const EditWishScreen = (props) => {
       setIsLoading(true);
 
       try {
+        console.log('EditWishesScreen - try, formState.inputValues', formState.inputValues);
         if (editedWish) {
           await dispatch(
             wishesActions.updateWish(
@@ -100,9 +106,10 @@ const EditWishScreen = (props) => {
         } else {
           await dispatch(
             wishesActions.createWish(
+              '1',
               formState.inputValues.title,
               formState.inputValues.text,
-              +formState.inputValues.price,
+              formState.inputValues.price,
               formState.inputValues.url,
               formState.inputValues.imageUri,
             ),
@@ -168,8 +175,9 @@ const EditWishScreen = (props) => {
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
             returnKeyType="next"
-            initialValue={editedWish ? editedWish.price : 0}
+            initialValue={editedWish ? editedWish.price : "0"}
             onInputChange={inputChangeHandler}
+            initiallyValid={!!editedWish}
           />
           <Input
             id="text"

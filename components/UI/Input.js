@@ -30,12 +30,14 @@ const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue ? props.initialValue : '',
     isValid: props.initiallyValid,
-    touched: false,
+    touched: true,
   });
+  // touched: false,
 
   const { onInputChange, id } = props;
 
   useEffect(() => {
+    console.log("Input - useEffect")
     if (inputState.touched) {
       onInputChange(id, inputState.value, inputState.isValid);
     }
