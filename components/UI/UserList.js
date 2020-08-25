@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import UserItem from './UserItem';
 
 const UserList = (props) => {
+  console.log('UserList');
   const favoriteMeals = useSelector((state) => { return state.meals.favoriteMeals; });
 
   const renderMealItem = (itemData) => {

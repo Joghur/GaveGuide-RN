@@ -7,7 +7,7 @@ export const WISHES = [
   new Wish(
     '1',
     '1',
-    '1',
+    'ylTWw91y5GSPMQApgyGjcR3GWtt1',
     'T-shirt fra Føtex',
     'Kan fåes i rød og gul',
     '100-200kr',
@@ -37,7 +37,7 @@ export const WISHES = [
   new Wish(
     '4',
     '1',
-    '1',
+    'ylTWw91y5GSPMQApgyGjcR3GWtt1',
     'Motor-cykel',
     'Kan fåes i rød og gul. Set billig i Bilka',
     '111.999kr',

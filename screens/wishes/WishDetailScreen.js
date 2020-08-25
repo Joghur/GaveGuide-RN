@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import {
   Image, View, Text, StyleSheet, Linking,
@@ -24,25 +25,35 @@ const WishDetailScreen = (props) => {
     return wish.id === wishId;
   });
 
-  console.log("selectedWish ---------", selectedWish)
-  if (!selectedWish) {
+  console.log('selectedWish ---------', selectedWish);
+
+  if (typeof selectedWish === 'undefined') {
     props.navigation.goBack();
   }
 
-  const onPressHandler = async () => {
-    console.log("props.navigation", props.navigation)
-    setError(null);
-    try {
-      await dispatch(wishesActions.deleteWish(wishId));
-      props.navigation.navigate('PeopleWishes');
-    } catch (err) {
-      console.log('error, err -------', err);
-      setError(err.message);
-    }
-  };
+  // const onPressHandler = async () => {
+  //   console.log('WishDetailScreen - onPressHandler');
+  //   setError(null);
+  //   try {
+  //     console.log('WishDetailScreen - try/catch - wishId', wishId);
+  //     await dispatch(wishesActions.deleteWish(wishId));
+  //     props.navigation.navigate('PeopleWishes');
+  //   } catch (err) {
+  //     console.log('WishDetailScreen - onPressHandler - error, err -------', err);
+  //     setError(err.message);
+  //   }
+  // };
 
   if (error) {
     return <View>{error}</View>;
+  }
+
+  if (selectedWish.length === 0) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>No wish found!</Text>
+      </View>
+    );
   }
 
   return (
@@ -66,14 +77,6 @@ const WishDetailScreen = (props) => {
         >
           Tryk her for at se mere
         </Text>
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonShadow}>
-            <Text onPress={onPressHandler} style={styles.button}>Opdater Ønske</Text>
-          </View>
-          <View style={styles.buttonShadow}>
-            <Text onPress={onPressHandler} style={styles.button}>Slet Ønske</Text>
-          </View>
-        </View>
       </View>
     </ScrollView>
   );

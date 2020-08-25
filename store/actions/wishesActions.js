@@ -13,6 +13,7 @@ export const SET_WISH = 'SET_WISH';
 
 export const fetchWishes = () => {
   console.log('fetchWishes');
+
   return async (dispatch, getState) => {
     const wishesDB = firebase.firestore().collection('wishes');
     try {
@@ -20,7 +21,7 @@ export const fetchWishes = () => {
 
       const snapshot = await wishesDB.get();
       snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
+        console.log('fetchWishes - ', doc.id, '=>', doc.data());
         loadedWishes.push(
           new Wish(
             doc.id,
@@ -47,6 +48,8 @@ export const fetchWishes = () => {
 };
 
 export const createWish = (title, text, price, url, imageUri) => {
+  console.log('createWish');
+
   return async (dispatch, getState) => {
     const { userId } = getState().auth;
 
@@ -120,14 +123,12 @@ export const createWish = (title, text, price, url, imageUri) => {
 // };
 
 export const deleteWish = (wishId) => {
-  return async (dispatch, getState) => {
+  console.log('deleteWishAction');
+  return async (dispatch) => {
+    console.log('deleteWishAction - dispatch');
     const wishesDB = firebase.firestore().collection('wishes');
 
-    const res = await wishesDB.doc(wishId).delete();
-    console.log('res -----------------', res);
-    // if (!response.ok) {
-    //   throw new Error('Something went wrong. wishActions deleteWish');
-    // }
+    await wishesDB.doc(wishId).delete();
 
     dispatch({
       type: DELETE_WISH,

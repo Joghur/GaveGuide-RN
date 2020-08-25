@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  View, Text, StyleSheet, Button, Platform, ActivityIndicator,
+  View, Text, StyleSheet, Button, ActivityIndicator,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import DefaultText from '../../components/UI/DefaultText';
-import HeaderButton from '../../components/UI/HeaderButton';
+// import HeaderButton from '../../components/UI/HeaderButton';
 import WishList from '../../components/UI/WishList';
 import * as wishesActions from '../../store/actions/wishesActions';
 import Colors from '../../constants/Colors';
+import { WISHES } from '../../data/dummy-data';
 
 const PeopleWishesScreen = (props) => {
   console.log('PeopleWishesScreen');
@@ -17,20 +18,42 @@ const PeopleWishesScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
   const userId = props.navigation.getParam('userId');
+  console.log('PeopleWishesScreen, userId', userId);
   const wishes = useSelector((state) => { return state.wishes.availableWishes; });
+  console.log('PeopleWishesScreen, wishes', wishes);
   const selectedWishes = wishes.filter((wish) => { return wish.ownerId === userId; });
+  console.log('PeopleWishesScreen, selectedWishes', selectedWishes);
 
   const dispatch = useDispatch();
 
+  const makeDummyWishes = async () => {
+    console.log('PeopleWishesScreen, makeWishes');
+    try {
+      WISHES.map((wish) => {
+        console.log('PeopleWishesScreen - wishes map wish', wish);
+        return dispatch(wishesActions.createWish(
+          wish.title,
+          wish.text,
+          wish.price,
+          wish.url,
+          wish.imageUri,
+        ));
+      });
+    } catch (err) {
+      console.log('PeopleWishesScreen - makeDummyWishes - error, err -------', err);
+      setError(err.message);
+    }
+  };
+
   const loadWishes = useCallback(
     async () => {
-      console.log('PeopleWishesScreen, useEffect');
+      console.log('PeopleWishesScreen, loadWishes, useCallback');
       setError(null);
       setIsRefreshing(true);
       try {
         await dispatch(wishesActions.fetchWishes());
       } catch (err) {
-        console.log('error, err -------', err);
+        console.log('PeopleWishesScreen - loadWishes - useCallback - error, err -------', err);
         setError(err.message);
       }
       setIsRefreshing(false);
@@ -39,6 +62,7 @@ const PeopleWishesScreen = (props) => {
   );
 
   useEffect(() => {
+    console.log('PeopleWishesScreen - useEffect, loadWishes');
     loadWishes();
   }, [loadWishes]);
 
@@ -47,6 +71,7 @@ const PeopleWishesScreen = (props) => {
   // Så der skal laves en listener
   useEffect(
     () => {
+      console.log('PeopleWishesScreen - useEffect, willFocus');
       const willFocus = props.navigation.addListener('willFocus', loadWishes);
       return () => {
         willFocus.remove();
@@ -76,45 +101,31 @@ const PeopleWishesScreen = (props) => {
     return (
       <View style={styles.centered}>
         <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
-        {/* <Button
-        title="Prøv igen"
-        onPress={loadWishes}
-        color={Colors.primary}
-      /> */}
+        <Button
+          title="Prøv igen"
+          onPress={makeDummyWishes}
+          color={Colors.primary}
+        />
       </View>
     );
   }
 
   return (
     <View>
+      <Button
+        title="makeDummyWishes"
+        onPress={makeDummyWishes}
+        color={Colors.primary}
+      />
       <WishList listData={selectedWishes} navigation={props.navigation} />
     </View>
   );
-};
-
-PeopleWishesScreen.navigationOptions = (navigationData) => {
-  const name = navigationData.navigation.getParam('name');
-  return {
-    headerTitle: name,
-    headerRight: (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="EditWish"
-          iconName={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
-          onPress={() => {
-            navigationData.navigation.navigate('EditWish');
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
 };
 
 export default PeopleWishesScreen;
 
 const styles = StyleSheet.create({
   centered: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

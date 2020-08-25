@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, Image,
+  StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 
 import Colors from '../../constants/Colors';
 
 const WishItem = (props) => {
+  console.log('WishItem');
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity onPress={props.onSelectWish}>

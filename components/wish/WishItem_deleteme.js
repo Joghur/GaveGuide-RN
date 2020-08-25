@@ -6,12 +6,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
-  Platform
+  Platform,
 } from 'react-native';
 
 import Card from '../UI/Card';
 
-const WishItem = props => {
+const WishItem = (props) => {
   let TouchableCmp = TouchableOpacity;
   // console.log(props)
   if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -43,45 +43,45 @@ const WishItem = props => {
 const styles = StyleSheet.create({
   product: {
     height: 300,
-    margin: 20
+    margin: 20,
   },
   touchable: {
     borderRadius: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   imageContainer: {
     width: '100%',
     height: '60%',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   image: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   details: {
     alignItems: 'center',
     height: '17%',
-    padding: 10
+    padding: 10,
   },
   title: {
     fontFamily: 'purisa-bold',
     fontSize: 18,
-    marginVertical: 2
+    marginVertical: 2,
   },
   price: {
     fontFamily: 'purisa',
     fontSize: 14,
-    color: '#888'
+    color: '#888',
   },
   actions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '23%',
-    paddingHorizontal: 20
-  }
+    paddingHorizontal: 20,
+  },
 });
 
 export default WishItem;
