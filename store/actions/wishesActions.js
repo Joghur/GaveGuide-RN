@@ -51,13 +51,14 @@ export const createWish = (title, text, price, url, imageUri) => {
 
   return async (dispatch, getState) => {
     console.log('createWish, dispatch');
-    const { userId } = getState().auth;
-
+    const user_obj = firebase.auth().currentUser;
+    console.log('createWish - user_obj', user_obj);
+    console.log('createWish - user_obj.uid', user_obj.uid);
     const wishesDB = firebase.firestore().collection('wishes');
 
     const wish_ref = await wishesDB.add({
       groupId: '1',
-      ownerId: userId,
+      ownerId: user_obj.uid,
       title,
       text,
       price,
@@ -70,7 +71,7 @@ export const createWish = (title, text, price, url, imageUri) => {
       wishData: {
         id: wish_ref.id,
         groupId: '1',
-        ownerId: userId,
+        ownerId: user_obj.uid,
         title,
         text,
         price,
