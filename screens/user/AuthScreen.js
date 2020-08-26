@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
 import React, {
@@ -80,7 +81,7 @@ const AuthScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(action);
-      props.navigation.navigate('Wishes');
+      // props.navigation.navigate('Wishes');
     } catch (err) {
       setError(err.message);
       setIsLoading(false);

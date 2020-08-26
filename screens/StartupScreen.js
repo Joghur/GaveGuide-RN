@@ -6,11 +6,16 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import firebase from 'firebase';
+import { useDispatch } from 'react-redux';
 
 import Colors from '../constants/Colors';
 import * as authActions from '../store/actions/authActions';
 
+/**
+ * StartUpscreen.
+ * Chooses between login screen if user is logged out or Main screen if user is logged in
+ */
 const StartupScreen = (props) => {
   console.log('StartUpScreen');
 
@@ -20,21 +25,20 @@ const StartupScreen = (props) => {
     const tryLogin = async () => {
       console.log('StartUpScreen, useEffect');
 
-      const userData = useSelector((state) => {
-        return state.auth.user_obj;
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          props.navigation.navigate('Wishes');
+          console.log('StartupScreen - user', user.uid);
+          // dispatch(authActions.authenticate(user));
+        } else {
+          props.navigation.navigate('Auth');
+          // dispatch(authActions.LOGOUT);
+        }
       });
-      console.log("Login - userData", userData)
-      if (!userData) {
-        props.navigation.navigate('Auth');
-        return;
-      }
-
-      props.navigation.navigate('Wishes');
-      // dispatch(authActions.authenticate(userData));
     };
 
     tryLogin();
-  }, [dispatch]);
+  }, []);
 
   return (
     <View style={styles.screen}>
