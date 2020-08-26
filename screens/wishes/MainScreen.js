@@ -1,24 +1,24 @@
+/* eslint-disable prefer-const */
+/* eslint-disable camelcase */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
   View, FlatList,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import firebase from 'firebase';
 
+import { HeaderButtons, Item, } from 'react-navigation-header-buttons';
 import HeaderButton from '../../components/UI/HeaderButton';
 import UserGridTile from '../../components/UI/UserGridTile';
 
 const MainScreen = (props) => {
   console.log('MainScreen');
   const users = useSelector((state) => { return state.users.availableUsers; });
-  const userId = useSelector((state) => { return state.auth.userId; });
-  // console.log("MainScreen, users", users)
-  // console.log("MainScreen, userId", userId)
 
-  const loggedInUser = users.find((user) => { return user.id === userId; });
-  // console.log("loggedInUser", loggedInUser)
-  let restUsers = users.filter((user) => { return user.id !== userId; });
-  // console.log("restUsers", restUsers)
+  const user_obj = firebase.auth().currentUser;
+  console.log('MainScreen - user_obj.uid', user_obj.uid);
+  const currentUserObject = users.find((user) => { return user.id === user_obj.uid; });
+  let restUsers = users.filter((user) => { return user.id !== user_obj.uid; });
 
   restUsers = restUsers.sort((a, b) => {
     const fa = a.name.toLowerCase();
@@ -33,16 +33,14 @@ const MainScreen = (props) => {
     return 0;
   });
 
+  /**
+   * Sorting array so that logged in user is at the top
+   */
   let newUserArray = [];
-  newUserArray.push(loggedInUser);
-  // console.log("1. newUserArray", newUserArray)
+  newUserArray.push(currentUserObject);
   newUserArray = newUserArray.concat(restUsers);
-  // console.log("2. newUserArray", newUserArray)
 
   const renderGridItem = (itemData) => {
-    // console.log("MainScreen, renderGridItem, itemData", itemData)
-    // console.log("itemData.item.imageUri", itemData.item.imageUri)
-
     return (
       <UserGridTile
         name={itemData.item.name}
@@ -93,11 +91,3 @@ MainScreen.navigationOptions = (navData) => {
 };
 
 export default MainScreen;
-
-// const styles = StyleSheet.create({
-//   centered: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// });

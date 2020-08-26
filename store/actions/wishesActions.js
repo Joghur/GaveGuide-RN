@@ -3,7 +3,6 @@
 /* eslint-disable no-tabs */
 import firebase from 'firebase';
 import Wish from '../../models/wish';
-
 import 'firebase/firestore';
 
 export const DELETE_WISH = 'DELETE_WISH';
