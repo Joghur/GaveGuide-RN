@@ -20,3 +20,7 @@ firebaseConfig.js
 yarn.lock
 
 config/Firebase.js
+
+data/dummy-data.js
+
+*.odt#
