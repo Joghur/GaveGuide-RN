@@ -1,10 +1,11 @@
-import { USERS } from '../../data/dummy-data';
+/* eslint-disable default-case */
+// import { USERS } from '../../data/dummy-data';
 import {
-  SET_USER
+  SET_USER,
 } from '../actions/usersActions';
 
 const initialState = {
-  availableUsers: USERS
+  availableUsers: [],
 };
 
 export default (state = initialState, action) => {
@@ -12,7 +13,7 @@ export default (state = initialState, action) => {
     case SET_USER:
       return {
         availableUsers: action.users,
-      }
+      };
   }
   return state;
 };

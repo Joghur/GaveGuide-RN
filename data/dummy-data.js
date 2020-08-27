@@ -44,6 +44,36 @@ export const WISHES = [
     'https://www.bilka.dk/produkter/puch-sky-24-roed-2019-boernecykel/100391449',
     'https://i.ytimg.com/vi/2nE87ER2g4U/maxresdefault.jpg',
   ),
+  new Wish(
+    '5',
+    '1',
+    'eIr8PfOT2Ac7jUkYAroKPGcO0qt1',
+    'Motor-cykel',
+    'Kan fåes i rød og gul. Set billig i Bilka',
+    '111.999kr',
+    'https://www.bilka.dk/produkter/puch-sky-24-roed-2019-boernecykel/100391449',
+    'https://i.ytimg.com/vi/2nE87ER2g4U/maxresdefault.jpg',
+  ),
+  new Wish(
+    '6',
+    '1',
+    'eIr8PfOT2Ac7jUkYAroKPGcO0qt1',
+    'Motor-cykel',
+    'Kan fåes i rød og gul. Set billig i Bilka',
+    '111.999kr',
+    'https://www.bilka.dk/produkter/puch-sky-24-roed-2019-boernecykel/100391449',
+    'https://i.ytimg.com/vi/2nE87ER2g4U/maxresdefault.jpg',
+  ),
+  new Wish(
+    '7',
+    '1',
+    'eIr8PfOT2Ac7jUkYAroKPGcO0qt1',
+    'Motor-cykel',
+    'Kan fåes i rød og gul. Set billig i Bilka',
+    '111.999kr',
+    'https://www.bilka.dk/produkter/puch-sky-24-roed-2019-boernecykel/100391449',
+    'https://i.ytimg.com/vi/2nE87ER2g4U/maxresdefault.jpg',
+  ),
 ];
 
 export const USERS = [
