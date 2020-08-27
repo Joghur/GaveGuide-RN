@@ -6,11 +6,14 @@ import 'firebase/firestore';
 
 export const SET_USER = 'SET_USER';
 
+/**
+ * fetchUsers
+ * Fetches all users in users collection from firebase
+ */
 export const fetchUsers = () => {
   console.log('fetchUsers');
 
   return async (dispatch) => {
-    console.log('fetchUsers - dispatch');
     const usersDB = firebase.firestore().collection('users');
     try {
       const loadedUsers = [];
@@ -27,7 +30,6 @@ export const fetchUsers = () => {
           ),
         );
       });
-      console.log('fetchUsers - loadedUsers', loadedUsers);
       dispatch({
         type: SET_USER,
         users: loadedUsers,

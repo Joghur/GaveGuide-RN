@@ -36,7 +36,6 @@ const WishList = (props) => {
       name = wishUser.name;
     }
 
-    // console.log("itemData", itemData)
     return (
       <>
         <WishItem
@@ -90,17 +89,25 @@ export default WishList;
 
 const styles = StyleSheet.create({
   button: {
-    fontFamily: 'chilanka-regular',
+    // fontFamily: 'chilanka-regular',
     borderRadius: 20,
     padding: 10,
-    fontSize: 18,
-    overflow: 'hidden',
+    // fontSize: 18,
+    // overflow: 'hidden',
   },
   buttonContainer: {
     justifyContent: 'space-evenly',
     flexDirection: 'row',
     fontFamily: 'chilanka-regular',
     fontSize: 45,
+    width: '100%',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    overflow: 'hidden',
+    margin: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    elevation: 4,
   },
   buttonShadow: {
     borderRadius: 20,
@@ -108,10 +115,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowOffset: { width: 6, height: 6 },
     shadowRadius: 10,
-    elevation: 5,
-    padding: 8,
-    marginVertical: 5,
-    marginHorizontal: 10,
+    // elevation: 15,
+    // padding: 8,
+    // marginVertical: 5,
+    // marginHorizontal: 10,
   },
   list: {
     alignContent: 'center',

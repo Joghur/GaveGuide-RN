@@ -102,11 +102,11 @@ const PeopleWishesScreen = (props) => {
     return (
       <View style={styles.centered}>
         <DefaultText>Ingen ønsker lavet endnu.</DefaultText>
-        <Button
+        {/* <Button
           title="makeDummyWishes"
           onPress={makeDummyWishes}
           color={Colors.primary}
-        />
+        /> */}
       </View>
     );
   }

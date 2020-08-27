@@ -20,7 +20,6 @@ export const fetchWishes = () => {
 
       const snapshot = await wishesDB.get();
       snapshot.forEach((doc) => {
-        // console.log('fetchWishes - ', doc.id, '=>', doc.data());
         loadedWishes.push(
           new Wish(
             doc.id,
@@ -41,7 +40,6 @@ export const fetchWishes = () => {
       });
     } catch (err) {
       console.log('fetchWishes - error', err);
-      // throw err;
     }
   };
 };

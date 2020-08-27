@@ -20,8 +20,6 @@ const WishDetailScreen = (props) => {
     return wish.id === wishId;
   });
 
-  console.log('WishDetailScreen - selectedWish ---------', selectedWish);
-
   if (typeof selectedWish === 'undefined') {
     props.navigation.goBack();
   }

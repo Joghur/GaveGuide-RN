@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  View, FlatList, Text,
+  View, FlatList, Text, ActivityIndicator, StyleSheet,
 } from 'react-native';
 import firebase from 'firebase';
 
@@ -11,7 +11,12 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../../components/UI/HeaderButton';
 import UserGridTile from '../../components/UI/UserGridTile';
 import * as userActions from '../../store/actions/usersActions';
+import Colors from '../../constants/Colors';
 
+/**
+ * MainScreen
+ * Show list of users in the form of two column tiles
+ */
 const MainScreen = (props) => {
   console.log('MainScreen');
 
@@ -24,13 +29,11 @@ const MainScreen = (props) => {
 
   const loadUsers = useCallback(
     async () => {
-      console.log('MainScreen, loadUsers, useCallback');
       setError(null);
       setIsLoading(true);
       try {
         await dispatch(userActions.fetchUsers());
       } catch (err) {
-        console.log('MainScreen - loadUsers - useCallback - error, err -------', err);
         setError(err.message);
       }
       setIsLoading(false);
@@ -39,16 +42,16 @@ const MainScreen = (props) => {
   );
 
   useEffect(() => {
-    console.log('MainScreen - useEffect, loadUsers');
     loadUsers();
   }, []);
 
   if (isLoading) {
     return (
-      <View>
+      <View style={styles.centered}>
         <Text>
           Henter brugere
         </Text>
+        <ActivityIndicator size="large" color={Colors.primary} />
       </View>
     );
   }
@@ -56,9 +59,7 @@ const MainScreen = (props) => {
     console.log('MainScreen - Error: ', error);
   }
 
-  console.log('MainScreen - users', users);
   const user_obj = firebase.auth().currentUser;
-  console.log('MainScreen - user_obj.uid', user_obj.uid);
   if (users) {
     const currentUserObject = users.find((user) => { return user.id === user_obj.uid; });
     let restUsers = users.filter((user) => { return user.id !== user_obj.uid; });
@@ -116,7 +117,7 @@ const MainScreen = (props) => {
   return (
     <View>
       <Text>
-        No users loaded yet
+        Ingen brugere hentet endnu
       </Text>
     </View>
   );
@@ -142,3 +143,11 @@ MainScreen.navigationOptions = (navData) => {
 };
 
 export default MainScreen;
+
+const styles = StyleSheet.create({
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+});

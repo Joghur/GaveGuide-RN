@@ -7,7 +7,6 @@ import {
 import Colors from '../../constants/Colors';
 
 const WishItem = (props) => {
-  // console.log('WishItem');
   return (
     <View style={styles.itemContainer}>
       <TouchableOpacity onPress={props.onSelectWish}>
@@ -19,8 +18,9 @@ const WishItem = (props) => {
         </Text>
         <Text style={styles.text}>{props.text}</Text>
         <Text style={styles.price}>
-          Pris:
-{props.price}
+          Pris:_
+          {props.price}
+          kr.
         </Text>
       </TouchableOpacity>
     </View>

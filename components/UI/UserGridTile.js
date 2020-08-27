@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 
 const UserGridTile = (props) => {
-  console.log('-------------------', props.image);
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
