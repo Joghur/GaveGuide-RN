@@ -32,6 +32,7 @@ const PeopleWishesScreen = (props) => {
       WISHES.map((wish) => {
         // console.log('PeopleWishesScreen - wishes map wish', wish);
         return dispatch(wishesActions.createWish(
+          '1',
           wish.title,
           wish.text,
           wish.price,
@@ -112,11 +113,11 @@ const PeopleWishesScreen = (props) => {
 
   return (
     <View>
-      <Button
+      {/* <Button
         title="makeDummyWishes"
         onPress={makeDummyWishes}
         color={Colors.primary}
-      />
+      /> */}
       <WishList listData={selectedWishes} navigation={props.navigation} />
     </View>
   );

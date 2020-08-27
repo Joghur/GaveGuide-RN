@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   bgImage: {
     height: '97%',
     width: '100%',
-    marginTop: 5
+    marginTop: 5,
     // justifyContent: 'center',
   },
   gridItem: {

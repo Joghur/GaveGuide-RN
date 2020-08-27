@@ -175,7 +175,7 @@ const EditWishScreen = (props) => {
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
             returnKeyType="next"
-            initialValue={editedWish ? editedWish.price : "0"}
+            initialValue={editedWish ? editedWish.price : '0'}
             onInputChange={inputChangeHandler}
             initiallyValid={!!editedWish}
           />
