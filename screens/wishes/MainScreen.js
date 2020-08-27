@@ -52,6 +52,9 @@ const MainScreen = (props) => {
       </View>
     );
   }
+  if (error) {
+    console.log('MainScreen - Error: ', error);
+  }
 
   console.log('MainScreen - users', users);
   const user_obj = firebase.auth().currentUser;
