@@ -40,7 +40,7 @@ export const fetchWishes = () => {
         wishes: loadedWishes,
       });
     } catch (err) {
-      console.log(err);
+      console.log('fetchWishes - error', err);
       // throw err;
     }
   };

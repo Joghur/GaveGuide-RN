@@ -1,25 +1,28 @@
 import React from 'react';
 import {
-  TouchableOpacity, Text, StyleSheet, View, Platform, TouchableNativeFeedback,
+  TouchableOpacity, Text, StyleSheet, View, Platform, TouchableNativeFeedback, ImageBackground,
 } from 'react-native';
 
 const UserGridTile = (props) => {
-  // console.log('UsergridTile');
+  console.log('-------------------', props.image);
   let TouchableCmp = TouchableOpacity;
 
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  const image = { uri: props.image };
+
   return (
     <TouchableCmp onPress={props.onSelect}>
       <View style={{ ...styles.gridItem, ...{ backgroundColor: props.color } }}>
         <View style={styles.container}>
-          {/* <View>
-                        <Image
-                            source={props.image}
-                            style={styles.bgImage}>
-                        </Image>
-                    </View> */}
+          <View>
+            <ImageBackground
+              source={image}
+              style={styles.bgImage}
+            />
+          </View>
           <View style={{}}>
             <Text style={styles.name}>{props.name.toUpperCase()}</Text>
           </View>
@@ -31,9 +34,10 @@ const UserGridTile = (props) => {
 
 const styles = StyleSheet.create({
   bgImage: {
-    height: '90%',
+    height: '97%',
     width: '100%',
-    justifyContent: 'flex-end',
+    marginTop: 5
+    // justifyContent: 'center',
   },
   gridItem: {
     flex: 1,
@@ -51,8 +55,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 6, height: 6 },
     shadowRadius: 10,
     padding: 15,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    justifyContent: 'center',
+    // alignItems: 'center',
   },
   name: {
     fontFamily: 'chilanka-regular',
