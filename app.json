@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Ønskelisten",
-    "slug": "wishlist-rn",
+    "name": "GaveGuiden",
+    "slug": "gaveguiden-rn",
     "privacy": "public",
     "sdkVersion": "38.0.0",
     "platforms": [
@@ -26,6 +26,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "v0.97"
+    "description": "v1.00"
   }
 }

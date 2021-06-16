@@ -6,17 +6,18 @@ npm-debug.*
 *.key
 *.mobileprovision
 *.orig.*
-*.png
 *.jpg
 web-build/
 web-report/
 
 assets/fonts/
 
-wishConfig.json
-
 firebaseConfig.js
 
 yarn.lock
 
 config/Firebase.js
+
+data/dummy-data.js
+
+*.odt#

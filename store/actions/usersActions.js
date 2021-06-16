@@ -1,45 +1,39 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-// import User from '../../models/user';
-// import { DB } from '../../wishConfig.json';
+import firebase from "firebase";
+import User from "../../models/user";
+import "firebase/firestore";
 
-// export const SET_USER = 'SET_USER';
+export const SET_USER = "SET_USER";
 
-// export const fetchUsers = () => {
-//   return async (dispatch, getState) => {
-//     const { userId } = getState().authActions;
+/**
+ * fetchUsers
+ * Fetches all users in users collection from firebase
+ */
+export const fetchUsers = () => {
+  return async (dispatch) => {
+    const usersDB = firebase.firestore().collection("users");
+    try {
+      const loadedUsers = [];
 
-//     const response = await fetch(
-//       `${DB}/users.json`,
-//     );
-
-//     if (!response.ok) {
-//       throw new Error('Something went wrong! usersActions');
-//     }
-
-//     const resData = await response.json();
-
-//     console.log("resData", resData)
-
-//     // konverterer object (der er fyldt med data om hvert ønske)
-//     // om til array
-//     const loadedUsers = [];
-//     for (const key in resData) {
-//       loadedUsers.push(new User(
-//         key,
-//         resData[key].groupId,
-//         resData[key].ownerId,
-//         resData[key].title,
-//         resData[key].text,
-//         resData[key].price,
-//         resData[key].url,
-//         resData[key].imageUri,
-//       ));
-//     }
-
-//     dispatch({
-//       type: SET_USER,
-//       wishes: loadedUsers,
-//     });
-//   };
-// };
+      const snapshot = await usersDB.get();
+      snapshot.forEach((doc) => {
+        loadedUsers.push(
+          new User(
+            doc.data().id,
+            doc.data().name,
+            doc.data().groupIds,
+            doc.data().imageUri,
+            doc.data().color
+          )
+        );
+      });
+      dispatch({
+        type: SET_USER,
+        users: loadedUsers,
+      });
+    } catch (err) {
+      Alert.alert("fetchUsers, error", err);
+    }
+  };
+};
