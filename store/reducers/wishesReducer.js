@@ -5,8 +5,8 @@ import {
   CREATE_WISH,
   UPDATE_WISH,
   SET_WISH,
-} from '../actions/wishesActions';
-import Wish from '../../models/wish';
+} from "../actions/wishesActions";
+import Wish from "../../models/wish";
 
 const initialState = {
   availableWishes: [],
@@ -28,16 +28,16 @@ export default (state = initialState, action) => {
         action.wishData.text,
         action.wishData.price,
         action.wishData.url,
-        action.wishData.imageUri,
+        action.wishData.imageUri
       );
       return {
         availableWishes: state.availableWishes.concat(newWish),
       };
 
     case UPDATE_WISH:
-      const wishIndex = state.availableWishes.findIndex(
-        (wish) => { return wish.id === action.wishId; },
-      );
+      const wishIndex = state.availableWishes.findIndex((wish) => {
+        return wish.id === action.wishId;
+      });
       const updatedWish = new Wish(
         action.wishId,
         action.wishData.groupId,
@@ -46,12 +46,12 @@ export default (state = initialState, action) => {
         action.wishData.text,
         action.wishData.price,
         action.wishData.url,
-        action.wishData.imageUri,
+        action.wishData.imageUri
       );
 
-      const availableWishIndex = state.availableWishes.findIndex(
-        (wish) => { return wish.id === action.wishId; },
-      );
+      const availableWishIndex = state.availableWishes.findIndex((wish) => {
+        return wish.id === action.wishId;
+      });
 
       const updatedAvailableWishes = [...state.availableWishes];
       updatedAvailableWishes[availableWishIndex] = updatedWish;
@@ -62,9 +62,9 @@ export default (state = initialState, action) => {
 
     case DELETE_WISH:
       return {
-        availableWishes: state.availableWishes.filter(
-          (wish) => { return wish.id !== action.wishId; },
-        ),
+        availableWishes: state.availableWishes.filter((wish) => {
+          return wish.id !== action.wishId;
+        }),
       };
   }
 

@@ -1,20 +1,18 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-import firebase from 'firebase';
-import User from '../../models/user';
-import 'firebase/firestore';
+import firebase from "firebase";
+import User from "../../models/user";
+import "firebase/firestore";
 
-export const SET_USER = 'SET_USER';
+export const SET_USER = "SET_USER";
 
 /**
  * fetchUsers
  * Fetches all users in users collection from firebase
  */
 export const fetchUsers = () => {
-  console.log('fetchUsers');
-
   return async (dispatch) => {
-    const usersDB = firebase.firestore().collection('users');
+    const usersDB = firebase.firestore().collection("users");
     try {
       const loadedUsers = [];
 
@@ -26,8 +24,8 @@ export const fetchUsers = () => {
             doc.data().name,
             doc.data().groupIds,
             doc.data().imageUri,
-            doc.data().color,
-          ),
+            doc.data().color
+          )
         );
       });
       dispatch({
@@ -35,7 +33,7 @@ export const fetchUsers = () => {
         users: loadedUsers,
       });
     } catch (err) {
-      console.log('fetchUsers, error', err);
+      Alert.alert("fetchUsers, error", err);
     }
   };
 };

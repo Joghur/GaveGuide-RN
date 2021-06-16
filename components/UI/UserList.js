@@ -1,12 +1,13 @@
-import React from 'react';
-import { StyleSheet, FlatList, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { StyleSheet, FlatList, View } from "react-native";
+import { useSelector } from "react-redux";
 
-import UserItem from './UserItem';
+import UserItem from "./UserItem";
 
 const UserList = (props) => {
-  console.log('UserList');
-  const favoriteMeals = useSelector((state) => { return state.meals.favoriteMeals; });
+  const favoriteMeals = useSelector((state) => {
+    return state.meals.favoriteMeals;
+  });
 
   const renderMealItem = (itemData) => {
     const isFavorite = favoriteMeals.find((meal) => {
@@ -21,7 +22,7 @@ const UserList = (props) => {
         affordability={itemData.item.affordability}
         onSelectMeal={() => {
           props.navigation.navigate({
-            routeName: 'PeopleWishes',
+            routeName: "PeopleWishes",
             params: {
               mealId: itemData.item.id,
               mealTitle: itemData.item.title,
@@ -38,7 +39,7 @@ const UserList = (props) => {
       <FlatList
         data={props.listData}
         renderItem={renderMealItem}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       />
     </View>
   );
@@ -49,8 +50,8 @@ export default UserList;
 const styles = StyleSheet.create({
   list: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 15,
   },
 });

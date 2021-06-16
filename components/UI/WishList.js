@@ -1,26 +1,24 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
-import {
-  FlatList, View, StyleSheet, Text, Alert,
-} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import React from "react";
+import { FlatList, View, StyleSheet, Text, Alert } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 
-import WishItem from './WishItem';
-import * as wishesActions from '../../store/actions/wishesActions';
+import WishItem from "./WishItem";
+import * as wishesActions from "../../store/actions/wishesActions";
 
 const WishList = (props) => {
-  console.log('WishList');
-
   const dispatch = useDispatch();
-  const users = useSelector((state) => { return state.users.availableUsers; });
+  const users = useSelector((state) => {
+    return state.users.availableUsers;
+  });
 
   const deleteHandler = (id) => {
-    console.log('WishDetailScreen - deleteHandler, id', id);
-    Alert.alert('Er du sikker?', 'Vil du slette dette øsnke?', [
-      { text: 'Nej', style: 'default' },
+    Alert.alert("Er du sikker?", "Vil du slette dette øsnke?", [
+      { text: "Nej", style: "default" },
       {
-        text: 'Ja',
-        style: 'destructive',
+        text: "Ja",
+        style: "destructive",
         onPress: () => {
           dispatch(wishesActions.deleteWish(id));
         },
@@ -30,7 +28,9 @@ const WishList = (props) => {
 
   const renderWishItem = (itemData) => {
     const wishUserId = itemData.item.ownerId;
-    const wishUser = users.find((user) => { return user.id === wishUserId; });
+    const wishUser = users.find((user) => {
+      return user.id === wishUserId;
+    });
     let name;
     if (wishUser) {
       name = wishUser.name;
@@ -46,7 +46,7 @@ const WishList = (props) => {
           image={itemData.item.imageUri}
           onSelectWish={() => {
             props.navigation.navigate({
-              routeName: 'WishDetail',
+              routeName: "WishDetail",
               params: {
                 wishOwnerName: name,
                 wishId: itemData.item.id,
@@ -58,16 +58,22 @@ const WishList = (props) => {
           <View style={styles.buttonShadow}>
             <Text
               onPress={() => {
-                props.navigation.navigate('EditWish', { wishId: itemData.item.id });
+                props.navigation.navigate("EditWish", {
+                  wishId: itemData.item.id,
+                });
               }}
               style={styles.button}
             >
               Opdater Ønske
-
             </Text>
           </View>
           <View style={styles.buttonShadow}>
-            <Text onPress={deleteHandler.bind(this, itemData.item.id)} style={styles.button}>Slet Ønske</Text>
+            <Text
+              onPress={deleteHandler.bind(this, itemData.item.id)}
+              style={styles.button}
+            >
+              Slet Ønske
+            </Text>
           </View>
         </View>
       </>
@@ -79,7 +85,9 @@ const WishList = (props) => {
       <FlatList
         data={props.listData}
         renderItem={renderWishItem}
-        keyExtractor={(item) => { return item.id; }}
+        keyExtractor={(item) => {
+          return item.id;
+        }}
       />
     </View>
   );
@@ -89,39 +97,32 @@ export default WishList;
 
 const styles = StyleSheet.create({
   button: {
-    // fontFamily: 'chilanka-regular',
     borderRadius: 20,
     padding: 10,
-    // fontSize: 18,
-    // overflow: 'hidden',
   },
   buttonContainer: {
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
-    fontFamily: 'chilanka-regular',
+    justifyContent: "space-evenly",
+    flexDirection: "row",
+    fontFamily: "chilanka-regular",
     fontSize: 45,
-    width: '100%',
-    backgroundColor: '#f5f5f5',
+    width: "100%",
+    backgroundColor: "#f5f5f5",
     borderRadius: 10,
-    overflow: 'hidden',
+    overflow: "hidden",
     margin: 10,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     elevation: 4,
   },
   buttonShadow: {
     borderRadius: 20,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 1,
     shadowOffset: { width: 6, height: 6 },
     shadowRadius: 10,
-    // elevation: 15,
-    // padding: 8,
-    // marginVertical: 5,
-    // marginHorizontal: 10,
   },
   list: {
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: "center",
+    justifyContent: "center",
   },
 });

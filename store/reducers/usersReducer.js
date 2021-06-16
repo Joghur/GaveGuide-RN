@@ -1,8 +1,6 @@
 /* eslint-disable default-case */
 // import { USERS } from '../../data/dummy-data';
-import {
-  SET_USER,
-} from '../actions/usersActions';
+import { SET_USER } from "../actions/usersActions";
 
 const initialState = {
   availableUsers: [],

@@ -1,9 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-import React, {
-  useState, useEffect, useReducer, useCallback,
-} from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from "react";
 import {
   ScrollView,
   View,
@@ -12,16 +10,16 @@ import {
   Button,
   ActivityIndicator,
   Alert,
-} from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useDispatch } from 'react-redux';
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useDispatch } from "react-redux";
 
-import Input from '../../components/UI/Input';
-import Card from '../../components/UI/Card';
-import Colors from '../../constants/Colors';
-import * as authActions from '../../store/actions/authActions';
+import Input from "../../components/UI/Input";
+import Card from "../../components/UI/Card";
+import Colors from "../../constants/Colors";
+import * as authActions from "../../store/actions/authActions";
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -46,15 +44,15 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const AuthScreen = (props) => {
+const AuthScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     inputValidities: {
       email: false,
@@ -65,23 +63,20 @@ const AuthScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occurred!', error, [{ text: 'Okay' }]);
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
   }, [error]);
 
   const authHandler = async () => {
-    console.log('authHandler');
     let action;
     action = authActions.login(
       formState.inputValues.email,
-      formState.inputValues.password,
+      formState.inputValues.password
     );
-    // console.log("authHandler, action", action)
     setError(null);
     setIsLoading(true);
     try {
       await dispatch(action);
-      // props.navigation.navigate('Wishes');
     } catch (err) {
       setError(err.message);
       setIsLoading(false);
@@ -97,7 +92,7 @@ const AuthScreen = (props) => {
         input: inputIdentifier,
       });
     },
-    [dispatchFormState],
+    [dispatchFormState]
   );
 
   return (
@@ -106,7 +101,7 @@ const AuthScreen = (props) => {
       keyboardVerticalOffset={20}
       style={styles.screen}
     >
-      <LinearGradient colors={['#aaa', '#fff']} style={styles.gradient}>
+      <LinearGradient colors={["#aaa", "#fff"]} style={styles.gradient}>
         <Card style={styles.authContainer}>
           <ScrollView>
             <Input
@@ -136,12 +131,12 @@ const AuthScreen = (props) => {
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
-                  <Button
-                    title="Login"
-                    color={Colors.primary}
-                    onPress={authHandler}
-                  />
-                )}
+                <Button
+                  title="Login"
+                  color={Colors.primary}
+                  onPress={authHandler}
+                />
+              )}
             </View>
           </ScrollView>
         </Card>
@@ -151,7 +146,7 @@ const AuthScreen = (props) => {
 };
 
 AuthScreen.navigationOptions = {
-  headerTitle: 'Authenticate',
+  headerTitle: "Authenticate",
 };
 
 const styles = StyleSheet.create({
@@ -160,11 +155,11 @@ const styles = StyleSheet.create({
   },
   gradient: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   authContainer: {
-    width: '80%',
+    width: "80%",
     maxWidth: 400,
     maxHeight: 400,
     padding: 20,

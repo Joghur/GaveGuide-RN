@@ -1,20 +1,25 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
-import React, {
-  useEffect, useCallback, useReducer, useState,
-} from 'react';
+import React, { useEffect, useCallback, useReducer, useState } from "react";
 import {
-  View, ScrollView, StyleSheet, Platform, Alert, KeyboardAvoidingView, ActivityIndicator,
-} from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector, useDispatch } from 'react-redux';
+  View,
+  ScrollView,
+  StyleSheet,
+  Platform,
+  Alert,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import HeaderButton from '../../components/UI/HeaderButton';
-import * as wishesActions from '../../store/actions/wishesActions';
-import Input from '../../components/UI/Input';
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import HeaderButton from "../../components/UI/HeaderButton";
+import * as wishesActions from "../../store/actions/wishesActions";
+import Input from "../../components/UI/Input";
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
@@ -40,28 +45,25 @@ const formReducer = (state, action) => {
 };
 
 const EditWishScreen = (props) => {
-  console.log('EditWishesScreen');
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const wishId = props.navigation.getParam('wishId');
+  const wishId = props.navigation.getParam("wishId");
   const editedWish = useSelector((state) => {
     return state.wishes.availableWishes.find((wish) => {
       return wish.id === wishId;
     });
   });
-  console.log('EditWishesScreen, wishId, editedWish', wishId, !!editedWish);
 
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      title: editedWish ? editedWish.title : '',
-      text: editedWish ? editedWish.text : '',
-      price: editedWish ? editedWish.price : '',
-      url: editedWish ? editedWish.url : '',
-      imageUri: editedWish ? editedWish.imageUri : '',
+      title: editedWish ? editedWish.title : "",
+      text: editedWish ? editedWish.text : "",
+      price: editedWish ? editedWish.price : "",
+      url: editedWish ? editedWish.url : "",
+      imageUri: editedWish ? editedWish.imageUri : "",
     },
     inputValidities: {
       title: !!editedWish,
@@ -69,68 +71,59 @@ const EditWishScreen = (props) => {
     formIsValid: !!editedWish,
   });
 
-  useEffect(
-    () => {
-      if (error) {
-        Alert.alert('An error occured', error, [{ text: 'Ok' }]);
+  useEffect(() => {
+    if (error) {
+      Alert.alert("An error occured", error, [{ text: "Ok" }]);
+    }
+  }, [error]);
+
+  const submitHandler = useCallback(async () => {
+    if (!formState.formIsValid) {
+      Alert.alert("Wrong input!", "Please check the errors in the form.", [
+        { text: "Okay" },
+      ]);
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      if (editedWish) {
+        await dispatch(
+          wishesActions.updateWish(
+            wishId,
+            "1",
+            formState.inputValues.title,
+            formState.inputValues.text,
+            formState.inputValues.price,
+            formState.inputValues.url,
+            formState.inputValues.imageUri
+          )
+        );
+      } else {
+        await dispatch(
+          wishesActions.createWish(
+            "1",
+            formState.inputValues.title,
+            formState.inputValues.text,
+            formState.inputValues.price,
+            formState.inputValues.url,
+            formState.inputValues.imageUri
+          )
+        );
       }
-    },
-    [error],
-  );
+      props.navigation.goBack();
+    } catch (err) {
+      setError(err.message);
+    }
 
-  const submitHandler = useCallback(
-    async () => {
-      console.log('EditWishesScreen - submitHandler - editedWish', !!editedWish);
-      if (!formState.formIsValid) {
-        Alert.alert('Wrong input!', 'Please check the errors in the form.', [{ text: 'Okay' }]);
-        return;
-      }
+    setIsLoading(false);
+  }, [dispatch, wishId, formState]);
 
-      setError(null);
-      setIsLoading(true);
-
-      try {
-        console.log('EditWishesScreen - try, formState.inputValues', formState.inputValues);
-        if (editedWish) {
-          await dispatch(
-            wishesActions.updateWish(
-              wishId,
-              '1',
-              formState.inputValues.title,
-              formState.inputValues.text,
-              formState.inputValues.price,
-              formState.inputValues.url,
-              formState.inputValues.imageUri,
-            ),
-          );
-        } else {
-          await dispatch(
-            wishesActions.createWish(
-              '1',
-              formState.inputValues.title,
-              formState.inputValues.text,
-              formState.inputValues.price,
-              formState.inputValues.url,
-              formState.inputValues.imageUri,
-            ),
-          );
-        }
-        props.navigation.goBack();
-      } catch (err) {
-        setError(err.message);
-      }
-
-      setIsLoading(false);
-    },
-    [dispatch, wishId, formState],
-  );
-
-  useEffect(
-    () => {
-      props.navigation.setParams({ submit: submitHandler });
-    },
-    [submitHandler],
-  );
+  useEffect(() => {
+    props.navigation.setParams({ submit: submitHandler });
+  }, [submitHandler]);
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -141,7 +134,7 @@ const EditWishScreen = (props) => {
         input: inputIdentifier,
       });
     },
-    [dispatchFormState],
+    [dispatchFormState]
   );
 
   if (isLoading) {
@@ -153,7 +146,11 @@ const EditWishScreen = (props) => {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={100}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="padding"
+      keyboardVerticalOffset={100}
+    >
       <ScrollView>
         <View style={styles.form}>
           <Input
@@ -165,7 +162,7 @@ const EditWishScreen = (props) => {
             autoCorrect
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.title : ''}
+            initialValue={editedWish ? editedWish.title : ""}
             initiallyValid={!!editedWish}
             required
           />
@@ -175,7 +172,7 @@ const EditWishScreen = (props) => {
             errorText="Please enter a valid price!"
             keyboardType="decimal-pad"
             returnKeyType="next"
-            initialValue={editedWish ? editedWish.price : '0'}
+            initialValue={editedWish ? editedWish.price : "0"}
             onInputChange={inputChangeHandler}
             initiallyValid={!!editedWish}
           />
@@ -189,7 +186,7 @@ const EditWishScreen = (props) => {
             multiline
             numberOfLines={3}
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.text : ''}
+            initialValue={editedWish ? editedWish.text : ""}
             initiallyValid={!!editedWish}
           />
           <Input
@@ -199,7 +196,7 @@ const EditWishScreen = (props) => {
             keyboardType="default"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.url : ''}
+            initialValue={editedWish ? editedWish.url : ""}
             initiallyValid={!!editedWish}
           />
           <Input
@@ -209,7 +206,7 @@ const EditWishScreen = (props) => {
             keyboardType="default"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={editedWish ? editedWish.imageUri : ''}
+            initialValue={editedWish ? editedWish.imageUri : ""}
             initiallyValid={!!editedWish}
           />
         </View>
@@ -219,14 +216,18 @@ const EditWishScreen = (props) => {
 };
 
 EditWishScreen.navigationOptions = (navData) => {
-  const submitFn = navData.navigation.getParam('submit');
+  const submitFn = navData.navigation.getParam("submit");
   return {
-    headerTitle: navData.navigation.getParam('wishId') ? 'Ændre Ønske' : 'Nyt Ønske',
+    headerTitle: navData.navigation.getParam("wishId")
+      ? "Ændre Ønske"
+      : "Nyt Ønske",
     headerRight: (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Save"
-          iconName={Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'}
+          iconName={
+            Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+          }
           onPress={submitFn}
         />
       </HeaderButtons>
@@ -240,8 +241,8 @@ const styles = StyleSheet.create({
   },
   centered: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,32 +1,31 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-no-bind */
-import React from 'react';
-import {
-  Image, View, Text, StyleSheet, Linking,
-} from 'react-native';
-import { useSelector } from 'react-redux';
+import { Image, View, Text, StyleSheet, Linking } from "react-native";
+import React from "react";
+import { useSelector } from "react-redux";
 
-import { ScrollView } from 'react-native-gesture-handler';
-import DefaultText from '../../components/UI/DefaultText';
+import { ScrollView } from "react-native-gesture-handler";
+import DefaultText from "../../components/UI/DefaultText";
 
-import Colors from '../../constants/Colors';
+import Colors from "../../constants/Colors";
 
 const WishDetailScreen = (props) => {
-  console.log('WishDetailScreen');
-
-  const availableWishes = useSelector((state) => { return state.wishes.availableWishes; });
-  const wishId = props.navigation.getParam('wishId');
+  const availableWishes = useSelector((state) => {
+    return state.wishes.availableWishes;
+  });
+  const wishId = props.navigation.getParam("wishId");
 
   const selectedWish = availableWishes.find((wish) => {
     return wish.id === wishId;
   });
 
-  if (typeof selectedWish === 'undefined') {
+  if (typeof selectedWish === "undefined") {
     props.navigation.goBack();
   }
 
   if (selectedWish.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>No wish found!</Text>
       </View>
     );
@@ -36,14 +35,11 @@ const WishDetailScreen = (props) => {
     <ScrollView>
       <View style={styles.details}>
         <Text style={styles.title}>{selectedWish.title}</Text>
-        <Image
-          source={{ uri: selectedWish.imageUri }}
-          style={styles.image}
-        />
+        <Image source={{ uri: selectedWish.imageUri }} style={styles.image} />
         <Text style={styles.text}>{selectedWish.text}</Text>
         <DefaultText style={styles.price}>
           Pris:
-{selectedWish.price}
+          {selectedWish.price}
         </DefaultText>
         <Text
           style={styles.link}
@@ -59,7 +55,7 @@ const WishDetailScreen = (props) => {
 };
 
 WishDetailScreen.navigationOptions = (navigationData) => {
-  const wishOwnerName = navigationData.navigation.getParam('wishOwnerName');
+  const wishOwnerName = navigationData.navigation.getParam("wishOwnerName");
 
   return {
     headerTitle: `Ønske fra ${wishOwnerName}`,
@@ -68,7 +64,7 @@ WishDetailScreen.navigationOptions = (navigationData) => {
 
 const styles = StyleSheet.create({
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderRadius: 10,
   },
@@ -76,10 +72,10 @@ const styles = StyleSheet.create({
     padding: 15,
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 10,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 1,
     shadowOffset: { width: 6, height: 6 },
     shadowRadius: 10,
@@ -87,30 +83,28 @@ const styles = StyleSheet.create({
   },
   link: {
     paddingTop: 20,
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 30,
-    color: 'blue',
-    fontFamily: 'chilanka-regular',
+    color: "blue",
+    fontFamily: "chilanka-regular",
   },
-  price: {
-
-  },
+  price: {},
   text: {
     fontSize: 20,
-    fontFamily: 'purisa',
+    fontFamily: "purisa",
     paddingTop: 10,
     marginBottom: 10,
   },
   title: {
-    fontFamily: 'chilanka-regular',
+    fontFamily: "chilanka-regular",
     fontSize: 35,
     backgroundColor: Colors.accent,
-    textAlign: 'center',
+    textAlign: "center",
     borderRadius: 10,
     marginBottom: 10,
   },
   listItem: {
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderWidth: 1,
     padding: 10,
   },

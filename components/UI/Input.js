@@ -1,11 +1,10 @@
+/* eslint-disable operator-linebreak */
 /* eslint-disable max-len */
-import React, { useReducer, useEffect } from 'react';
-import {
-  View, Text, TextInput, StyleSheet,
-} from 'react-native';
+import React, { useReducer, useEffect } from "react";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 
-const INPUT_CHANGE = 'INPUT_CHANGE';
-const INPUT_BLUR = 'INPUT_BLUR';
+const INPUT_CHANGE = "INPUT_CHANGE";
+const INPUT_BLUR = "INPUT_BLUR";
 
 const inputReducer = (state, action) => {
   switch (action.type) {
@@ -26,18 +25,15 @@ const inputReducer = (state, action) => {
 };
 
 const Input = (props) => {
-  // console.log('Input');
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.initialValue ? props.initialValue : '',
+    value: props.initialValue ? props.initialValue : "",
     isValid: props.initiallyValid,
     touched: true,
   });
-  // touched: false,
 
   const { onInputChange, id } = props;
 
   useEffect(() => {
-    console.log("Input - useEffect")
     if (inputState.touched) {
       onInputChange(id, inputState.value, inputState.isValid);
     }
@@ -45,7 +41,8 @@ const Input = (props) => {
 
   const textChangeHandler = (text) => {
     // eslint-disable-next-line no-useless-escape
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
     if (props.required && text.trim().length === 0) {
       isValid = false;
@@ -90,24 +87,24 @@ const Input = (props) => {
 
 const styles = StyleSheet.create({
   formControl: {
-    width: '100%',
+    width: "100%",
   },
   label: {
-    fontFamily: 'sawasdee-bold',
+    fontFamily: "sawasdee-bold",
     marginVertical: 8,
   },
   input: {
     paddingHorizontal: 2,
     paddingVertical: 3,
-    borderBottomColor: '#ccc',
+    borderBottomColor: "#ccc",
     borderBottomWidth: 1,
   },
   errorContainer: {
     marginVertical: 5,
   },
   errorText: {
-    fontFamily: 'sawasdee',
-    color: 'red',
+    fontFamily: "sawasdee",
+    color: "red",
     fontSize: 13,
   },
 });

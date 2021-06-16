@@ -1,20 +1,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 /* eslint-disable no-tabs */
-import firebase from 'firebase';
-import Wish from '../../models/wish';
-import 'firebase/firestore';
+import firebase from "firebase";
+import Wish from "../../models/wish";
+import "firebase/firestore";
 
-export const DELETE_WISH = 'DELETE_WISH';
-export const CREATE_WISH = 'CREATE_WISH';
-export const UPDATE_WISH = 'UPDATE_WISH';
-export const SET_WISH = 'SET_WISH';
+export const DELETE_WISH = "DELETE_WISH";
+export const CREATE_WISH = "CREATE_WISH";
+export const UPDATE_WISH = "UPDATE_WISH";
+export const SET_WISH = "SET_WISH";
 
 export const fetchWishes = () => {
-  console.log('fetchWishes');
-
   return async (dispatch, getState) => {
-    const wishesDB = firebase.firestore().collection('wishes');
+    const wishesDB = firebase.firestore().collection("wishes");
     try {
       const loadedWishes = [];
 
@@ -29,8 +27,8 @@ export const fetchWishes = () => {
             doc.data().text,
             doc.data().price,
             doc.data().url,
-            doc.data().imageUri,
-          ),
+            doc.data().imageUri
+          )
         );
       });
 
@@ -39,25 +37,15 @@ export const fetchWishes = () => {
         wishes: loadedWishes,
       });
     } catch (err) {
-      console.log('fetchWishes - error', err);
+      console.log("fetchWishes - error", err);
     }
   };
 };
 
 export const createWish = (groupId, title, text, price, url, imageUri) => {
-  console.log('createWish');
-
   return async (dispatch, getState) => {
-    console.log('createWish, dispatch');
     const user_obj = firebase.auth().currentUser;
-    console.log('createWish - user_obj', user_obj);
-    console.log('createWish - user_obj.uid', user_obj.uid);
-    const wishesDB = firebase.firestore().collection('wishes');
-    console.log('createWish - title: ', title);
-    console.log('createWish - text: ', text);
-    console.log('createWish - price: ', price);
-    console.log('createWish - url: ', url);
-    console.log('createWish - imageUri: ', imageUri);
+    const wishesDB = firebase.firestore().collection("wishes");
     const wish_ref = await wishesDB.add({
       groupId,
       ownerId: user_obj.uid,
@@ -85,16 +73,12 @@ export const createWish = (groupId, title, text, price, url, imageUri) => {
 };
 
 export const updateWish = (id, groupId, title, text, price, url, imageUri) => {
-  console.log('updateWish');
-
   return async (dispatch, getState) => {
     // redux-thunk giver mulighed for at at aflæse state inde i
     // dispatch function
 
-    console.log('updateWishAction - dispatch');
-
     const user_obj = firebase.auth().currentUser;
-    const wishesDB = firebase.firestore().collection('wishes');
+    const wishesDB = firebase.firestore().collection("wishes");
 
     wishesDB.doc(id).update({
       groupId,
@@ -123,10 +107,8 @@ export const updateWish = (id, groupId, title, text, price, url, imageUri) => {
 };
 
 export const deleteWish = (wishId) => {
-  console.log('deleteWishAction');
   return async (dispatch) => {
-    console.log('deleteWishAction - dispatch');
-    const wishesDB = firebase.firestore().collection('wishes');
+    const wishesDB = firebase.firestore().collection("wishes");
 
     await wishesDB.doc(wishId).delete();
 
