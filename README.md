@@ -8,6 +8,7 @@ Functionality (see images below):
  - Show list of users
  - Show list of a users wishes
  - Show details of each wish
+ - Create, update and delete your own wishes
 
 Tech used:
 - Expo: sdk 38
